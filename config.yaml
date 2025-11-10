@@ -1,0 +1,39 @@
+# Dashboard Configuration File
+
+# Alert Thresholds
+thresholds:
+  revenue_drop_pct: 15
+  sales_target_miss_pct: 20
+  low_stock_threshold: 5
+  conversion_drop_pct: 25
+  inventory_turnover_min: 2.0
+  shrinkage_rate_max: 1.5
+  stockout_alert: true
+
+# Email Settings (Configure for production)
+email_settings:
+  enabled: false
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  from_email: "dashboard@yourcompany.com"
+  to_emails:
+    - "ceo@yourcompany.com"
+    - "cfo@yourcompany.com"
+  smtp_username: "your_email@gmail.com"
+  smtp_password: "your_app_password"
+  dashboard_url: "https://your-dashboard.streamlit.app"
+
+# Dashboard Settings
+dashboard:
+  refresh_interval_minutes: 60
+  default_date_range_days: 7
+  max_upload_size_mb: 200
+
+# Boutique Targets (Daily Revenue in USD)
+boutique_targets:
+  Dubai_Mall: 50000
+  Paris_Champs_Elysees: 45000
+  London_Bond_Street: 40000
+  NYC_Fifth_Avenue: 55000
+  Tokyo_Ginza: 48000
+  Hong_Kong_Central: 52000
