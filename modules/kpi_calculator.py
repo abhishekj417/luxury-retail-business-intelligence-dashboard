@@ -39,9 +39,21 @@ def calculate_kpis(sales_data, inventory_data):
     conversion_change = conversion_rate - prev_conversion
 
     # Inventory Turnover (annual basis)
-    total_inventory_value = (inventory_data['Current_Stock_Units'] * inventory_data['Unit_Cost']).sum()
+    # Use Retail_Price as proxy for cost if Unit_Cost not available
+    if 'Unit_Cost' in inventory_data.columns:
+        unit_cost = inventory_data['Unit_Cost']
+    else:
+        # Estimate cost as 40% of retail price if Unit_Cost not available
+        unit_cost = inventory_data['Retail_Price'] * 0.4
+
+    total_inventory_value = (inventory_data['Current_Stock_Units'] * unit_cost).sum()
+
+    # Calculate COGS from sales data
     last_30_days = sales_data[sales_data['Date'] >= (datetime.now() - timedelta(days=30))]
-    cogs_30_days = last_30_days['Units_Sold'].sum() * inventory_data['Unit_Cost'].mean()
+
+    # Estimate average unit cost from inventory
+    avg_unit_cost = unit_cost.mean()
+    cogs_30_days = last_30_days['Units_Sold'].sum() * avg_unit_cost
     annual_cogs = cogs_30_days * 12
     inventory_turnover = (annual_cogs / total_inventory_value) if total_inventory_value > 0 else 0
 
